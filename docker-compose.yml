@@ -11,7 +11,7 @@ services:
       MYSQL_USER: $DB_USER
       MYSQL_PASSWORD: $DB_PASSWORD
     ports:
-      - '3306:3306'
+      - '33061:3306'
     labels:
         com.symfony.server.service-prefix: 'DATABASE'
 
