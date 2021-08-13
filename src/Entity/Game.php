@@ -38,7 +38,7 @@ class Game
     /**
      * @ORM\Column(type="integer")
      */
-    private $Position;
+    private $position;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -105,12 +105,12 @@ class Game
 
     public function getPosition(): ?int
     {
-        return $this->Position;
+        return $this->position;
     }
 
-    public function setPosition(int $Position): self
+    public function setPosition(int $position): self
     {
-        $this->Position = $Position;
+        $this->position = $position;
 
         return $this;
     }

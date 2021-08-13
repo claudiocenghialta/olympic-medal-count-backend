@@ -22,12 +22,12 @@ class Athlete
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $FirstName;
+    private $first_name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $LastName;
+    private $last_name;
 
     /**
      * @ORM\ManyToOne(targetEntity=Nation::class, inversedBy="athletes")
@@ -50,26 +50,26 @@ class Athlete
         return $this->id;
     }
 
-    public function getFirstName(): ?string
+    public function getFirst_name(): ?string
     {
-        return $this->FirstName;
+        return $this->first_name;
     }
 
-    public function setFirstName(string $FirstName): self
+    public function setFirst_name(string $first_name): self
     {
-        $this->FirstName = $FirstName;
+        $this->first_name = $first_name;
 
         return $this;
     }
 
     public function getLastName(): ?string
     {
-        return $this->LastName;
+        return $this->last_name;
     }
 
-    public function setLastName(string $LastName): self
+    public function setLastName(string $last_name): self
     {
-        $this->LastName = $LastName;
+        $this->last_name = $last_name;
 
         return $this;
     }
