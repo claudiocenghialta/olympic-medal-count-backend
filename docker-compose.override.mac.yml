@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  apache:
+    volumes:
+      - 'data:/var/www/html' # MacOs nfs version
+
+  php:
+    image: wodby/php:$PHP_MACOS_TAG
+    environment:
+      PHP_XDEBUG_CLIENT_HOST: host.docker.internal # Docker 18.03+ Mac/Win
+    volumes:
+      - 'data:/var/www/html' # MacOs nfs version
+
+  nodebug:
+    image: wodby/php:$PHP_MACOS_TAG
+    container_name: "${PROJECT_NAME}_nodebug"
+    environment:
+      APP_ENV: dev
+      PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
+      DB_HOST: $DB_HOST
+      DB_PORT: $DB_PORT
+      DB_USER: $DB_USER
+      DB_PASSWORD: $DB_PASSWORD
+      DB_NAME: $DB_NAME
+      DB_DRIVER: $DB_DRIVER
+      PHP_FPM_USER: wodby
+      PHP_FPM_GROUP: wodby
+      PHP_XDEBUG_REMOTE_HOST: host.docker.internal
+      COLUMNS: 80 # Set 80 columns for docker exec -it.
+    volumes:
+      - 'data:/var/www/html' # MacOs nfs version
+
+  phpqa:
+    image: lucacracco/phpqa:version-1.1
+    command: 'tail -f /dev/null'
+    container_name: "${PROJECT_NAME}_qa"
+    volumes:
+      - 'data:/var/www/html' # MacOs nfs version
+
+# Enable this on MacOs after executing file-setup_native_nfs_docker_osx.sh
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+      device: ':${PROJECT_DOCROOT}'

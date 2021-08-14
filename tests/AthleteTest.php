@@ -14,11 +14,26 @@ class AthleteTest extends KernelTestCase
 
     protected function setUp(): void
     {
+        dd(getenv('DATABASE_URL'));
         $kernel = self::bootKernel();
 
         DatabasePrimer::prime(self::$kernel);
 
         $this->entityManager = $kernel->getContainer()->get('doctrine')->getManager();
+    }
+
+    public function testCreate()
+    {
+        $athlete = new Athlete();
+        $athlete->setFirstName('Claudio');
+        $athlete->setLastName('Cenghialta');
+        $this->entityManager->persist($athlete);
+        $this->entityManager->flush();
+        $search =  $this->entityManager
+            ->getRepository(Athlete::class)
+            ->findOneBy(['first_name' => 'Claudio']);
+        var_dump($search);
+        $this->assertSame('Cenghialta', $athlete->getLastName());
     }
 
     public function testSearchByName()

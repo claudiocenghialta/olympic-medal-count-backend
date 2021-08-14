@@ -31,7 +31,7 @@ class Athlete
 
     /**
      * @ORM\ManyToOne(targetEntity=Nation::class, inversedBy="athletes")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $nation;
 
@@ -50,12 +50,12 @@ class Athlete
         return $this->id;
     }
 
-    public function getFirst_name(): ?string
+    public function getFirstName(): ?string
     {
         return $this->first_name;
     }
 
-    public function setFirst_name(string $first_name): self
+    public function setFirstName(string $first_name): self
     {
         $this->first_name = $first_name;
 
