@@ -26,7 +26,7 @@ class Game
 
     /**
      * @ORM\ManyToOne(targetEntity=Sport::class, inversedBy="athlete")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $sport;
 
