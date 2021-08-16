@@ -27,11 +27,11 @@ class AthleteFixtures extends Fixture  implements DependentFixtureInterface
     {
         for ($i=0; $i < 100; $i++) {
             $athlete = new Athlete();
-            $athlete->setFirstName($this->faker->firstName);
-            $athlete->setLastName($this->faker->lastName);
+            $athlete->setFirstName($this->faker->firstName());
+            $athlete->setLastName($this->faker->lastName());
             $nation = null;
             while ($nation === null) {
-                $countryCode = $this->faker->countryCode;
+                $countryCode = $this->faker->countryCode();
                 $nation = $this->entityManager
                     ->getRepository(Nation::class)
                     ->findOneBy(['iso_code' => $countryCode]);
