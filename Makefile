@@ -110,10 +110,20 @@ logs:
 analyze:
 	docker run -it -u $$(id -u) --rm -v "`pwd`/../":/app lucacracco/phpqa:version-1.1 phpqa --config=phpqa
 
+
+## Init the DB
+.PHONY: init
+init: migrate load
+
 ## make Doctrine migrations on DB
 .PHONY: migrate
 migrate:
-	docker exec -ti -e COLUMNS=$(shell tput cols) -e LINES=$(shell tput lines) $(shell docker ps --filter name='$(PROJECT_NAME)_php' --format "{{ .ID }}") php bin/console Doctrin:migrations:migrate
+	docker exec -ti -e COLUMNS=$(shell tput cols) -e LINES=$(shell tput lines) $(shell docker ps --filter name='$(PROJECT_NAME)_php' --format "{{ .ID }}") php bin/console Doctrin:migrations:migrate -n
+
+## Load data fixture on DB
+.PHONY: load
+load:
+	docker exec -ti -e COLUMNS=$(shell tput cols) -e LINES=$(shell tput lines) $(shell docker ps --filter name='$(PROJECT_NAME)_php' --format "{{ .ID }}") php bin/console doctrine:fixtures:load -n
 
 ## launch tests
 .PHONY: test

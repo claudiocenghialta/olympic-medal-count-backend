@@ -24,13 +24,13 @@ class AthleteTest extends KernelTestCase
     public function testCreate()
     {
         $athlete = new Athlete();
-        $athlete->setFirstName('Claudio');
+        $athlete->setFirstName('Claudio_test');
         $athlete->setLastName('Cenghialta');
         $this->entityManager->persist($athlete);
         $this->entityManager->flush();
         $search =  $this->entityManager
             ->getRepository(Athlete::class)
-            ->findOneBy(['first_name' => 'Claudio']);
+            ->findOneBy(['first_name' => 'Claudio_test']);
         $this->assertSame('Cenghialta', $search->getLastName());
     }
 
