@@ -14,7 +14,6 @@ class AthleteTest extends KernelTestCase
 
     protected function setUp(): void
     {
-        dd(getenv('DATABASE_URL'));
         $kernel = self::bootKernel();
 
         DatabasePrimer::prime(self::$kernel);
@@ -32,19 +31,9 @@ class AthleteTest extends KernelTestCase
         $search =  $this->entityManager
             ->getRepository(Athlete::class)
             ->findOneBy(['first_name' => 'Claudio']);
-        var_dump($search);
-        $this->assertSame('Cenghialta', $athlete->getLastName());
+        $this->assertSame('Cenghialta', $search->getLastName());
     }
 
-    public function testSearchByName()
-    {
-        $athlete = $this->entityManager
-            ->getRepository(Athlete::class)
-            ->findOneBy(['first_name' => 'test_first_name'])
-        ;
-
-        $this->assertSame('test_last_name', $athlete->getLastName());
-    }
 
     protected function tearDown(): void
     {
