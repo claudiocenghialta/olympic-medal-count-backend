@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=AthleteRepository::class)
- * @ApiResource(itemOperations={"get"},collectionOperations={"get"},normalizationContext={"groups"={"athlete"}})
+ * @ApiResource(itemOperations={"get","delete","patch"},collectionOperations={"get","post"},normalizationContext={"groups"={"athlete"}})
  */
 class Athlete
 {
