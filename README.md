@@ -19,6 +19,16 @@ make composer install
 make migrate
 make load
 ```
+### The project URL
+
+The project is reachable at the value inserted in the .env file, for example:
+PROJECT_BASE_URL=medal.docker.localhost
+will be reachable at
+http://medal.docker.localhost
+Api
+http://medal.docker.localhost/api
+traefik dashboard
+http://medal.docker.localhost:8080/
 
 ### To run tests
 
