@@ -10,12 +10,14 @@ There is a makefile to build the docker compose and other operations
 make up
 ```
 
-### To init the DB
+### To load the dependencies and init the  DB
 
-This command laungh the migrations and data fixtures for the DB
+These commands install all the dependencies needed, run all the migrations and data fixtures for the DB
 
 ```bash
-make init
+make composer install
+make migrate
+make load
 ```
 
 ### To run tests
