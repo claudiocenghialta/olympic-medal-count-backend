@@ -36,27 +36,18 @@ class Game
      */
     private $sport;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Athlete::class, inversedBy="games")
-     * @Groups({"games"})
-     */
-    private $athlete;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\OneToMany(targetEntity=AthleteGame::class, mappedBy="game")
      * @Groups({"games"})
+     * 
      */
-    private $position;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     * @Groups({"games"})
-     */
-    private $disqualified;
+    private $athleteGames;
 
     public function __construct()
     {
         $this->athlete = new ArrayCollection();
+        $this->athleteGames = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -88,50 +79,33 @@ class Game
         return $this;
     }
 
+
     /**
-     * @return Collection|Athlete[]
+     * @return Collection|AthleteGame[]
      */
-    public function getAthlete(): Collection
+    public function getAthleteGames(): Collection
     {
-        return $this->athlete;
+        return $this->athleteGames;
     }
 
-    public function addAthlete(Athlete $athlete): self
+    public function addAthleteGame(AthleteGame $athleteGame): self
     {
-        if (!$this->athlete->contains($athlete)) {
-            $this->athlete[] = $athlete;
+        if (!$this->athleteGames->contains($athleteGame)) {
+            $this->athleteGames[] = $athleteGame;
+            $athleteGame->setGame($this);
         }
 
         return $this;
     }
 
-    public function removeAthlete(Athlete $athlete): self
+    public function removeAthleteGame(AthleteGame $athleteGame): self
     {
-        $this->athlete->removeElement($athlete);
-
-        return $this;
-    }
-
-    public function getPosition(): ?int
-    {
-        return $this->position;
-    }
-
-    public function setPosition(int $position): self
-    {
-        $this->position = $position;
-
-        return $this;
-    }
-
-    public function getDisqualified(): ?bool
-    {
-        return $this->disqualified;
-    }
-
-    public function setDisqualified(?bool $disqualified): self
-    {
-        $this->disqualified = $disqualified;
+        if ($this->athleteGames->removeElement($athleteGame)) {
+            // set the owning side to null (unless already changed)
+            if ($athleteGame->getGame() === $this) {
+                $athleteGame->setGame(null);
+            }
+        }
 
         return $this;
     }

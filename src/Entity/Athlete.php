@@ -42,15 +42,17 @@ class Athlete
      */
     private $nation;
 
+
     /**
-     * @ORM\ManyToMany(targetEntity=Game::class, mappedBy="athlete")
+     * @ORM\OneToMany(targetEntity=AthleteGame::class, mappedBy="athlete")
      * @Groups({"athlete"})
      */
-    private $games;
+    private $athleteGames;
 
     public function __construct()
     {
         $this->games = new ArrayCollection();
+        $this->athleteGames = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,28 +96,33 @@ class Athlete
         return $this;
     }
 
+   
+
     /**
-     * @return Collection|Game[]
+     * @return Collection|AthleteGame[]
      */
-    public function getGames(): Collection
+    public function getAthleteGames(): Collection
     {
-        return $this->games;
+        return $this->athleteGames;
     }
 
-    public function addGame(Game $game): self
+    public function addAthleteGame(AthleteGame $athleteGame): self
     {
-        if (!$this->games->contains($game)) {
-            $this->games[] = $game;
-            $game->addAthlete($this);
+        if (!$this->athleteGames->contains($athleteGame)) {
+            $this->athleteGames[] = $athleteGame;
+            $athleteGame->setAthlete($this);
         }
 
         return $this;
     }
 
-    public function removeGame(Game $game): self
+    public function removeAthleteGame(AthleteGame $athleteGame): self
     {
-        if ($this->games->removeElement($game)) {
-            $game->removeAthlete($this);
+        if ($this->athleteGames->removeElement($athleteGame)) {
+            // set the owning side to null (unless already changed)
+            if ($athleteGame->getAthlete() === $this) {
+                $athleteGame->setAthlete(null);
+            }
         }
 
         return $this;
