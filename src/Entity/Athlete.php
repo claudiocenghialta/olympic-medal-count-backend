@@ -25,22 +25,26 @@ class Athlete
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"athlete"})
      */
     private $first_name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"athlete"})
      */
     private $last_name;
 
     /**
      * @ORM\ManyToOne(targetEntity=Nation::class, inversedBy="athletes")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"athlete"})
      */
     private $nation;
 
     /**
      * @ORM\ManyToMany(targetEntity=Game::class, mappedBy="athlete")
+     * @Groups({"athlete"})
      */
     private $games;
 

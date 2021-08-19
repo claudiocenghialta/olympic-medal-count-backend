@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 use App\Repository\SportCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=SportCategoryRepository::class)
- * @ApiResource(itemOperations={"get","delete","patch"},collectionOperations={"get","post"},normalizationContext={"groups"={"athlete"}})
+ * @ApiResource(itemOperations={"get","delete","patch"},collectionOperations={"get","post"},normalizationContext={"groups"={"sports-categories"}})
  */
 class SportCategory
 {
@@ -24,11 +25,13 @@ class SportCategory
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"sports-categories"})
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Sport::class, mappedBy="category", orphanRemoval=true)
+     * @Groups({"sports-categories"})
      */
     private $sports;
 
