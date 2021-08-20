@@ -4,14 +4,34 @@ namespace App\Entity;
 
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\AthleteGameController;
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\AthleteGameRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=AthleteGameRepository::class)
- * @ApiResource(itemOperations={"get","delete","patch"},collectionOperations={"get","post"},normalizationContext={"groups"={"athlete-games"}})
+ * @ApiResource(
+ *  itemOperations={
+ *      "get",
+ *      "delete",
+ *      "patch"={
+ *          "method" = "PATCH",
+ *          "path" = "/athlete_games/{id}",
+ *          "controller" = AthleteGameController::class
+ *      }
+ *  },
+ *  collectionOperations={
+ *      "get",
+ *      "post"={
+ *          "method" = "POST",
+ *          "path" = "/athlete_games",
+ *          "controller" = AthleteGameController::class
+ *      }
+ *  },
+ *  normalizationContext={"groups"={"athlete-games"}})
  */
-#[ApiResource]
+
 class AthleteGame
 {
     /**
@@ -34,7 +54,7 @@ class AthleteGame
     private $game;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @Groups({"athlete-games"})
      */
     private $position;
@@ -42,6 +62,7 @@ class AthleteGame
     /**
      * @ORM\Column(type="boolean", nullable=true)
      * @Groups({"athlete-games"})
+     * @Assert\Type("bool")
      */
     private $disqualified;
 
