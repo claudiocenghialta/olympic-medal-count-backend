@@ -60,7 +60,7 @@ class AthleteGame
     private $position;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=false, options={"default":false})
      * @Groups({"athlete-games"})
      * @Assert\Type("bool")
      */
@@ -100,19 +100,19 @@ class AthleteGame
         return $this->position;
     }
 
-    public function setPosition(int $position): self
+    public function setPosition(?int $position): self
     {
         $this->position = $position;
 
         return $this;
     }
 
-    public function getDisqualified(): ?bool
+    public function getDisqualified(): bool
     {
         return $this->disqualified;
     }
 
-    public function setDisqualified(?bool $disqualified): self
+    public function setDisqualified(bool $disqualified): self
     {
         $this->disqualified = $disqualified;
 
